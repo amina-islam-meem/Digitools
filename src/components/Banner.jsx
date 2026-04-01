@@ -1,5 +1,3 @@
-import bannerImg from '../assets/banner.png'; 
-
 const Banner = () => {
   return (
     <section className="bg-white pt-12 pb-8 px-4">
@@ -32,7 +30,7 @@ const Banner = () => {
             </div>
             <div className="flex-1">
               <img 
-                src={bannerImg} 
+                src="/assets/banner.png" // ✅ এভাবে লিখো (শুরুতে শুধু /)
                 alt="Digital Workflow Banner" 
                 className="rounded-2xl shadow-2xl w-full object-cover"
               />

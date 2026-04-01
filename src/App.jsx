@@ -1,121 +1,126 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import productsData from './data/products.json';
+import Navbar from './components/Navbar';
+import Banner from './components/Banner';
+import Stats from './components/Stats';
+import ProductList from './components/ProductList';
+import Cart from './components/Cart';
+import Steps from './components/Steps';
+import Pricing from './components/Pricing';
+import CTA from './components/CTA';
+import Footer from './components/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // State to store items added to the cart
+  const [cart, setCart] = useState([]);
+  
+  // State to handle toggling between 'products' and 'cart' views
+  const [activeTab, setActiveTab] = useState('products');
+
+  // Function to add a product to the cart
+  const addToCart = (product) => {
+    const isAlreadyInCart = cart.find((item) => item.id === product.id);
+    
+    if (!isAlreadyInCart) {
+      setCart([...cart, product]);
+      toast.success(` ${product.name} added to cart!`, {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+    } else {
+      toast.info('Item is already in your cart!', {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+    }
+  };
+
+  // Function to remove a specific item from the cart
+  const removeFromCart = (productId) => {
+    setCart(cart.filter((item) => item.id !== productId));
+    toast.error('Item removed from cart', {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
+  };
+
+  // Function to handle "Proceed to Checkout" (Clears cart)
+  const handleCheckout = () => {
+    if (cart.length === 0) return;
+    setCart([]);
+    setActiveTab('products');
+    toast.success(' Purchase successful! Thank you.', {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div className="min-h-screen bg-white font-sans text-slate-900">
+      {/* Navigation Bar - Receives cart count for the icon */}
+      <Navbar cartCount={cart.length} />
+
+      {/* Hero Sections */}
+      <Banner />
+      <Stats />
+      
+      {/* Main Content: Products & Cart Toggle */}
+      <main className="py-16 px-4 max-w-7xl mx-auto" id="shop-section">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">Premium Digital Tools</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto mb-10">
+            Choose from our curated collection of premium digital products designed to boost your productivity.
           </p>
+          
+          {/* THE TOGGLE BUTTONS (Matching Figma) */}
+          <div className="flex justify-center gap-2 bg-gray-100 p-1.5 rounded-full inline-flex border border-gray-200 shadow-inner">
+            <button 
+              className={`px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                activeTab === 'products' 
+                ? 'bg-violet-600 text-white shadow-lg' 
+                : 'text-gray-500 hover:text-gray-800'
+              }`} 
+              onClick={() => setActiveTab('products')}
+            >
+              Products
+            </button>
+            <button 
+              className={`px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                activeTab === 'cart' 
+                ? 'bg-violet-600 text-white shadow-lg' 
+                : 'text-gray-500 hover:text-gray-800'
+              }`} 
+              onClick={() => setActiveTab('cart')}
+            >
+              Cart ({cart.length})
+            </button>
+          </div>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        {/* CONDITIONAL RENDERING: Shows Product List or Cart */}
+        {activeTab === 'products' ? (
+          <ProductList products={productsData} onAdd={addToCart} />
+        ) : (
+          <Cart 
+            cart={cart} 
+            onRemove={removeFromCart} 
+            onCheckout={handleCheckout} 
+          />
+        )}
+      </main>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* Extra Sections from Figma */}
+      <Steps />
+      <Pricing />
+      <CTA />
+      <Footer />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Toast Notification Container */}
+      <ToastContainer />
+    </div>
+  );
 }
 
-export default App
+export default App;

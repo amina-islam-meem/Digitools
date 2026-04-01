@@ -29,7 +29,7 @@ const Navbar = ({ cartCount }) => {
           </div>
 
           <button className="font-medium text-[#101727]">Login</button>
-          <button className="bg-indigo-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-indigo-700 transition">
+          <button className="bg-gradient-to-r from-[#4F39F6] to-[#9514FA] text-white px-5 py-2 rounded-full font-semibold hover:bg-indigo-700 transition">
             Get Started
           </button>
         </div>

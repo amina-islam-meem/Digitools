@@ -2,8 +2,8 @@ const Navbar = ({ cartCount }) => {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 py-4">
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="text-3xl font-extrabold text-indigo-600 tracking-tight">
-          DigiTools
+        <div className="text-3xl font-extrabold bg-gradient-to-r from-[#4F39F6] to-[#9514FA] bg-clip-text text-transparent tracking-tight">
+           DigiTools
         </div>
         
         <div className="hidden md:flex gap-8 font-medium text-[#101727]">

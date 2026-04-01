@@ -30,7 +30,7 @@ const Banner = () => {
             </div>
             <div className="flex-1">
               <img 
-                src="/assets/banner.png" // ✅ এভাবে লিখো (শুরুতে শুধু /)
+                src="./asset/banner.png"
                 alt="Digital Workflow Banner" 
                 className="rounded-2xl shadow-2xl w-full object-cover"
               />

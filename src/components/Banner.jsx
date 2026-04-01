@@ -1,3 +1,5 @@
+import bannerImg from '../assets/banner.png'; 
+
 const Banner = () => {
   return (
     <section className="bg-white pt-12 pb-8 px-4">
@@ -13,7 +15,7 @@ const Banner = () => {
                 Supercharge Your Digital Workflow
               </h1>
               <p className="text-gray-500 text-lg max-w-lg">
-                Access premium AI tools, design assets, templates, and productivity software—all in one place. Start creating faster today.Explor products
+                Access premium AI tools, design assets, templates, and productivity software—all in one place. Start creating faster today.
               </p>
               <div className="flex gap-4 pt-2">
                 <button className="bg-gradient-to-r from-[#4F39F6] to-[#9514FA] text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all">
@@ -30,8 +32,8 @@ const Banner = () => {
             </div>
             <div className="flex-1">
               <img 
-                src="./src/assets/banner.png" 
-                alt="" 
+                src={bannerImg} 
+                alt="Digital Workflow Banner" 
                 className="rounded-2xl shadow-2xl w-full object-cover"
               />
             </div>
@@ -41,4 +43,5 @@ const Banner = () => {
     </section>
   );
 };
+
 export default Banner;
